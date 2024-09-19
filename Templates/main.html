@@ -18,6 +18,18 @@
         margin-top: 10px;
         margin-bottom: 10px;
       }
+    .product-img{
+      max-width : 100%;
+      height: 100px;
+    }
+    .cartButton{
+      margin-top: 10px;
+    }
+    .imgwidth{
+      margin-top : 10px;
+      size: 100%;
+      border-radius: 10px;
+    }
     </style>
 </head>
 <body>
@@ -35,6 +47,12 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'upload_images' %}">Uploads</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'show_wishlist' %}">Wish List</a>
+          </li>
+          <li class="nav-item"></li>
+          <a class="nav-link" href="{% url 'show_cartList' %}">Cart List</a>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Link
@@ -50,12 +68,22 @@
             <a class="nav-link disabled" aria-disabled="true">Link</a>
           </li>
         </ul>
-        <a href = "{% url 'Login' %}">
-        <button class="btn btn-primary" type="button" id = "loginButton">Login</button></a>
+        <!-- <a href = "{% url 'Login' %}"> -->
+      <!-- </a> -->
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
+        {% if user.is_authenticated %}
+        <h6>{{user.username}}</h6>
+          <a href = "{% url 'Logout' %}"> 
+            <button class="btn btn-primary" type="button" id = "loginButton">Logout</button>
+          </a> 
+        {% else %} 
+          <a href = "{% url 'Login' %}"> 
+            <button class="btn btn-primary" type="button" id = "loginButton">Login</button>
+          </a> 
+        {% endif %}
       </div>
     </div>
   </nav>
@@ -65,7 +93,6 @@
 
 {% endblock %}
 
-  <footer style="background-color: burlywood;width:100%; text-align: center; height:45px;">This is our footer</footer>
 
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

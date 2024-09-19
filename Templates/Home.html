@@ -59,20 +59,21 @@
 
   <div class="row" style="padding: 20px">
     <h1>Food place</h1>
-    {% for item in Foodiee %}
+    {% for item in Foodiees %}
   <div class="card" style="width: 18rem; margin: 10px">
     <img
-      class="card-img-top"
-      src="{% static 'images/down.jpg' %}"
-      alt="Card image cap"
+      class="card-img-top imgwidth"
+      src= "{{item.images.url}}"
     />
     <div class="card-body">
-      <h5 class="card-title">{{item.name}}</h5>
-      <p class="card-text">{{item.desc}}</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <h5 class="card-title">{{item.name}} - {{item.cost}}</h5>
+      <p class="card-text">{{item.category}}</p>
+      <a href="{% url 'Product' id=item.id %}" class="btn btn-primary">view product</a>
+      <a href="{% url 'addWish' id=item.id %}" class="btn btn-primary">+ Wish list</a>
+      <a href="{% url 'addCart' id=item.id %}" class="btn btn-primary cartButton">+ Add to cart</a>
     </div>
   </div>
   {% endfor %}
 </div>
-
+<footer style="background-color: burlywood;width:100%; text-align: center; height:45px;">This is our footer</footer>
 {% endblock %}

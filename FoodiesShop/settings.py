@@ -81,6 +81,12 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# define base directory for media uploads
+import os
+MEDIA_ROOT = os.path.join(BASE_DIR,'/media')
+
+#url to handle media_root
+MEDIA_URL = 'media/'
 
 
 # Password validation
