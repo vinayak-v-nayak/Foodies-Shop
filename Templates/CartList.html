@@ -1,6 +1,6 @@
-{% extends 'main.html' %}
+{% extends 'main.html' %} 
 
-{% block body_block %}
+{% block body_block %} 
     {% if user_products %}
         {% for item in user_products %}
             <div class="container mt-5">
@@ -9,15 +9,47 @@
                         <img src="{{ item.product.images.url }}" alt="Image" class="img-fluid product-img"/>
                     </div>
                     <div class="col-md-6">
+                        <!-- Display product-related information -->
                         <h1>{{ item.product.name }}</h1>
-                        <h3>Quantity : {{ item.cart_count }}</h3>
-                        <!-- <p>{{ item.product.category }}</p> -->
-                        
+                        <p>{{ item.product.category }}</p>
+                        <div class = "input-group mb-3">
+                        <p>Quantity:</p>
+                        <button class = "btn btn-outline-secondary" id="decrementbtn"> - </button>
+                        <input type = "number" class ="form-control text-center" value="{{ item.cart_count }}" min="1" id = "inputBtn" />
+                        <button class = "btn btn-outline-secondary" id="incrementbtn"> + </button>
+                    </div>
                     </div>
                 </div>
             </div>
+
+         <script>
+         document.addEventListener("DOMContentLoaded", function(){
+            const decrementBtn = document.getElementById("decrementbtn");
+            const incrementBtn = document.getElementById("incrementbtn");
+            const inputBtn = document.getElementById("inputBtn");
+            decrementBtn.addEventListener("click",function(){
+                updateQuantity(-1)
+            })
+            incrementBtn.addEventListener("click",function(){
+                updateQuantity(1)
+            })
+            function updateQuantity(change){
+                let currentValue = parseInt(inputBtn.value); 
+                let newValue = currentValue + change;
+                if(newValue < 1){
+                    newValue = 1;
+                }
+                inputBtn.value = newValue
+            }
+         })
+         
+         
+         </script>
+
         {% endfor %}
     {% else %}
-        <p>Your cart is empty.</p>
+        <p>Your CartList is empty.</p>
     {% endif %}
 {% endblock %}
+
+<h1>Wishlist</h1>

@@ -25,6 +25,8 @@ def Home(request):
 def About(request):
     return render(request,"About.html")
 
+
+
 @login_required(login_url="/Login")
 def Uploads(request):
     if request.method == 'POST':
@@ -39,6 +41,8 @@ def Uploads(request):
         images = FoodImages.objects.all()
 
     return render(request,"Uploads.html",{'form':form,'images':images})
+
+
 
 
 
@@ -89,6 +93,8 @@ def wish_list(request,id):
     obj1.save()
     return redirect('home')
 
+
+#add to cart list
 def cart_list(request,id):
 
 #check if user has cart or not
@@ -103,36 +109,55 @@ def cart_list(request,id):
     return redirect('home')
 
 
-
+#Show list of cart items
+def show_cartList(request):
+    cart,created = Cart.objects.get_or_create(user=request.user)
+    cart_items = CartItem.objects.filter(cart = cart)
+    return render(request, "CartList.html",{"user_products":cart_items})
 
 def show_wishList(request):
     user = request.user
     wishlists = Wishlist.objects.filter(user=user) 
-
-
+    
     # Collect all products from all wishlists
-  # Collect products with their associated wishlist IDs
     products_with_wishlist = []
-
     for wishlist in wishlists:
-        # Add each product along with the wishlist ID
+        #add each product along with wishlist ID
         for product in wishlist.product.all():
             products_with_wishlist.append({
-                'product': product,
-                'wishlist_id': wishlist.id  # Include wishlist ID
-            })
-
+               'product' : product,
+               'wishlist_id':wishlist.id  #includes wishlist id
+            })   
     return render(request, "WishList.html", {"view_products": products_with_wishlist})
 
-def show_cartList(request):
-    cart, created = Cart.objects.get_or_create(user=request.user)
-    cart_items = CartItem.objects.filter(cart=cart)
-    return render(request, "CartList.html", {"user_products": cart_items})
+
+
 
 def remove_wish(request, id):
-     if request.user.is_authenticated:
-       wishlist_item = get_object_or_404(Wishlist, id=id, user=request.user)
-       wishlist_item.delete()
-       return redirect('home')
-     else:
+    if request.user.is_authenticated:
+        wishlist_item = get_object_or_404(Wishlist,id=id,user=request.user)
+        wishlist_item.delete()
+        return redirect('home')
+    else:
         return redirect('login')
+
+from django.http import JsonResponse
+
+def show_api(request):
+    start_text = request.GET.get('parameter1')
+    FoodName = FoodImages.objects.filter(name__startswith = start_text).values_list()
+    if FoodName:
+        message = {
+            "FoodName": FoodName[0],
+            "name":"Hey this is my data"
+        }
+    else:
+        message = {
+        "name":"data not found"
+    }
+    return JsonResponse(message)
+
+
+  
+
+

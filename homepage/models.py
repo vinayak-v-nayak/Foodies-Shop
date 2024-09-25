@@ -20,6 +20,9 @@ class FoodImages(models.Model):
     created = models.DateTimeField(auto_now_add=True) 
 
 
+    def __str__(self) -> str:
+        return f"{self.name}{self.cost}{self.category}"
+
 #wishlist and cart
 class Wishlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE) 
