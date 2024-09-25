@@ -1,0 +1,2 @@
+web: gunicorn FoodiesShop.wsgi
+
