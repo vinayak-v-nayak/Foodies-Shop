@@ -1,5 +1,5 @@
 """
-URL configuration for FoodiesShop project.
+URL configuration for foodiesshop project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -28,4 +28,4 @@ urlpatterns = [
     path('',include('homepage.urls')),
     # path('',views.Home,name="home"),
     # path('About',views.About,name="about"),
-]+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+]+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
